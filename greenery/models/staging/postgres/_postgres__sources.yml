@@ -1,0 +1,28 @@
+version: 2
+
+sources:
+
+  - name: postgres 
+    database: raw 
+    schema: public
+
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+
+    tables: # this is where we define table metadata (name, description, load timestamps)
+      - name: addresses 
+        description: Table for customer adresses
+      - name: events 
+        description: Table contains customer interactions and actions on the website
+      - name: order_items 
+        description: Bridge table associating an order with a product with the ordered quantity per prodocut
+      - name: orders
+        description: Table containing customer orders details
+      - name: products
+        description: Table contains products with the product name, price and inventory
+      - name: promos
+        description: Table contains promotion IDs and applicable discounts for active and inactive promotions
+      - name: users 
+        description: Table contains customers information
