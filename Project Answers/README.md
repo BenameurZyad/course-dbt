@@ -59,19 +59,19 @@ How many users have only made one purchase? Two purchases? Three+ purchases?
 **Answer :**    
 PURCHASE_PROFILE VISIT_COUNT  
 One purchase 25  
-Two purchases 56  
-Three+ purchases 280  
+Two purchases 28  
+Three+ purchases 71  
   
 **Query :**  
   
 ```sql
 WITH all_visits AS(
 SELECT
-COUNT(DISTINCT(order_id)) AS visit_count,
+COUNT(DISTINCT(order_id)) AS order_count,
 CASE
-    WHEN visit_count = 1 THEN 'One purchase'
-    WHEN visit_count = 2 THEN 'Two purchases'
-    WHEN visit_count >= 3 THEN 'Three+ purchases'
+    WHEN order_count = 1 THEN 'One purchase'
+    WHEN order_count = 2 THEN 'Two purchases'
+    WHEN order_count >= 3 THEN 'Three+ purchases'
 END AS purchase_profile
 
 FROM
@@ -81,7 +81,7 @@ GROUP BY user_id
 
 SELECT
 purchase_profile,
-SUM(visit_count) AS visit_count
+COUNT(order_count) AS order_count
 FROM all_visits
 GROUP BY purchase_profile
 ```
@@ -97,11 +97,19 @@ On average, how many unique sessions do we have per hour?
 **Query :**  
   
 ```sql
+WITH count_per_hour AS (
 SELECT DISTINCT
-    AVG(COUNT(DISTINCT(session_id))) OVER () AS mean_sessions_per_hour
+    EXTRACT(HOUR FROM created_at),
+    COUNT(DISTINCT(session_id)) AS mean_sessions_per_hour
 FROM
     dev_db.dbt_zyadbenameursanimaxcom.events
 GROUP BY
     EXTRACT(HOUR FROM created_at)
+ORDER BY EXTRACT(HOUR FROM created_at)
+)
+
+SELECT 
+AVG(mean_sessions_per_hour) AS mean_sessions_per_hour
+FROM count_per_hour
 ```
   
