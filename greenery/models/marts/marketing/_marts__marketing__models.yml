@@ -1,0 +1,9 @@
+models:
+  - name: fact_users_orders
+    description: Table for transactions summary at user level
+    columns:
+      - name: user_id
+        description: Is the Primary Key
+        tests:
+          - unique
+          - not_null

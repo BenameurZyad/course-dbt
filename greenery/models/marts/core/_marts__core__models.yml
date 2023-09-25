@@ -1,0 +1,62 @@
+models:
+  - name: dim_dates
+    description: Table for Date dimension
+    columns:
+      - name: date_key
+        description: Is the Primary Key
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_products
+    description: Table for Products dimension
+    columns:
+      - name: product_id
+        description: Is the Primary Key
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_users
+    description: Table for Users dimension
+    columns:
+      - name: user_id
+        description: Is the Primary Key
+        tests:
+          - unique
+          - not_null
+
+  - name: fact_order_items
+    description: Table detailing transactions at order items level
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - order_id
+            - product_id
+
+  - name: fact_orders
+    description: Table detailing transactions at orders level
+    columns:
+      - name: order_id
+        tests:
+          - unique
+          - not_null
+
+  - name: fact_shipment
+    description: Table detailing shipments at order level
+    columns:
+      - name: order_id
+        tests:
+          - unique
+          - not_null
+
+  - name: int__orders_details
+    description: Intermediate table detailing orders transactions at item level
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - order_id
+            - product_id
+
+
+          

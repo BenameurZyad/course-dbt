@@ -1,6 +1,6 @@
-with 
+with
     source as (
-        select 
+        select
             -- Each unique promocode on platform
             promo_id,
             -- Absolute dollar amount that is given off with the code
@@ -8,7 +8,8 @@ with
             -- Is the promo code active or disabled
             status
 
-        from {{ source('postgres', 'promos') }}
+        from {{ source("postgres", "promos") }}
     )
 
-select * from source
+select *
+from source

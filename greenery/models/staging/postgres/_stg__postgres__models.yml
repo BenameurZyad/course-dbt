@@ -1,7 +1,5 @@
-version: 2
-
 models:
-  - name: adresses
+  - name: stg__adresses
     description: Table for customer adresses
     columns:
       - name: address_id
@@ -18,7 +16,7 @@ models:
       - name: country
         description: country this delivery address is based in
 
-  - name: events
+  - name: stg__events
     description: Table contains customer interactions and actions on the website
     columns:
       - name: event_id
@@ -31,17 +29,19 @@ models:
       - name: user_id
         description: UUID of the user that this event is associated with
       - name: page_url
-        description: URL that the event happened on 
+        description: URL that the event happened on
       - name: created_at
-        description: Timestamp of the event 
+        description: Timestamp of the event
+      - name: created_date
+        description: Date of the event
       - name: event_type
-        description: Type of event 
+        description: Type of event
       - name: order_id
         description: If the event is specific to an order (mostly used for checkout)
       - name: product_id
         description: If the event is specific to a product
 
-  - name: order_items
+  - name: stg__order_items
     description: Bridge table associating an order with a product with the ordered quantity per prodocut
     columns:
       - name: order_id
@@ -49,9 +49,9 @@ models:
       - name: product_id
         description: ProductId of a single item in this order
       - name: quantity
-        description: quantity 
-        
-  - name: orders
+        description: quantity
+
+  - name: stg__orders
     description: Table containing customer orders details
     columns:
       - name: order_id
@@ -67,6 +67,8 @@ models:
         description: Delivery address for this order
       - name: created_at
         description: Timestamp when the order was created
+      - name: created_date
+        description: Date when the order was created
       - name: order_cost
         description: Dollar about of the items in the order
       - name: shipping_cost
@@ -78,13 +80,17 @@ models:
       - name: shipping_service
         description: Company that was used for shipping
       - name: estimated_delivery_at
+        description: Estimated timestamp of delivery
+      - name: estimated_delivery_date
         description: Estimated date of delivery
       - name: delivered_at
         description: Actual timestamp of delivery
+      - name: delivered_date
+        description: Actual date of delivery
       - name: status
         description: Status of the order
 
-  - name: products
+  - name: stg__products
     description: Table contains products with the product name, price and inventory
     columns:
       - name: product_id
@@ -95,11 +101,11 @@ models:
       - name: name
         description: Name of the product
       - name: price
-        description: Price of the product 
+        description: Price of the product
       - name: inventory
-        description: Amount of the inventory we have for this product 
+        description: Amount of the inventory we have for this product
 
-  - name: promos
+  - name: stg__promos
     description: Table contains promotion IDs and applicable discounts for active and inactive promotions
     columns:
       - name: promo_id
@@ -112,7 +118,7 @@ models:
       - name: status
         description: Is the promo code active or disabled
 
-  - name: users
+  - name: stg__users
     description: Table contains customers information
     columns:
       - name: user_id
@@ -128,10 +134,13 @@ models:
         description: email address of the user
       - name: phone_number
         description: phone number of the user
-      - name: created_at
-        description: timestamp the user was created
-      - name: updated_at
-        description: timestamp the user was last updated
       - name: address_id
         description: default delivery address for the user
-
+      - name: created_at
+        description: timestamp the user was created
+      - name: created_date
+        description: Date the user was created
+      - name: updated_at
+        description: timestamp the user was last updated
+      - name: updated_date
+        description: Date the user was last updated

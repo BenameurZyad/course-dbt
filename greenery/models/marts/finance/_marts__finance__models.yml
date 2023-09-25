@@ -1,0 +1,9 @@
+models:
+  - name: fact_sales
+    description: Table for financial transactions at order level
+    columns:
+      - name: order_id
+        description: Is the Primary Key
+        tests:
+          - unique
+          - not_null

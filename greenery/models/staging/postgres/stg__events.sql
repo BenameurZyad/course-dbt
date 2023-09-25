@@ -1,9 +1,10 @@
-with 
+with
     source as (
-        select 
+        select
             -- UUID of each unique event on the platform
             event_id,
-            -- UUID of each browsing session on the platform which can contain many events
+            -- UUID of each browsing session on the platform which can contain many
+            -- events
             session_id,
             -- UUID of the user that this event is associated with
             user_id,
@@ -11,6 +12,8 @@ with
             page_url,
             -- Timestamp of the event
             created_at,
+            -- date of the event
+            created_at::date as created_date,
             -- Type of event
             event_type,
             -- If the event is specific to an order (mostly used for checkout)
@@ -18,7 +21,8 @@ with
             -- If the event is specific to a product
             product_id
 
-        from {{ source('postgres', 'events') }}
+        from {{ source("postgres", "events") }}
     )
 
-select * from source
+select *
+from source

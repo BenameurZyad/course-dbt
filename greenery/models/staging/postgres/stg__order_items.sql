@@ -1,6 +1,6 @@
-with 
+with
     source as (
-        select 
+        select
             -- OrderId of this order
             order_id,
             -- ProductId of a single item in this order
@@ -8,7 +8,8 @@ with
             -- Number of units of the product in this order
             quantity
 
-        from {{ source('postgres', 'order_items') }}
+        from {{ source("postgres", "order_items") }}
     )
 
-select * from source
+select *
+from source

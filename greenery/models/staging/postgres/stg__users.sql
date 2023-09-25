@@ -1,6 +1,6 @@
-with 
+with
     source as (
-        select 
+        select
             -- UUID for each unique user on platform
             user_id,
             -- first name of the user
@@ -11,14 +11,19 @@ with
             email,
             -- phone number of the user
             phone_number,
+            -- default delivery address for the user
+            address_id,
             -- timestamp the user was created
             created_at,
+            -- date the user was created
+            created_at::date as created_date,
             -- timestamp the user was last updated
             updated_at,
-            -- default delivery address for the user
-            address_id
+            -- date the user was last updated
+            updated_at::date as updated_date
 
-        from {{ source('postgres', 'users') }}
+        from {{ source("postgres", "users") }}
     )
 
-select * from source
+select *
+from source
