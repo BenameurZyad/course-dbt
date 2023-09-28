@@ -1,6 +1,6 @@
 with
     -- refs
-    page_views_count as (select * from {{ ref("int_page_views_count") }}),
+    session_event_count as (select * from {{ ref("int_session_event_count_agg") }}),
 
     -- CTEs
     final as (
@@ -8,18 +8,14 @@ with
         select 
             user_id,
             session_id,
-            sum(page_view_count) as page_view_count,
-            sum(add_to_cart_count) as add_to_cart_count,
-            sum(checkout_count) as checkout_count,
-            sum(shipping_count) as shipping_count
+            created_at,
+            sum(page_view) as page_view_count,
+            sum(add_to_cart) as add_to_cart_count,
+            sum(checkout) as checkout_count,
+            sum(package_shipped) as shipping_count
 
-        from page_views_count
-        where 
-            page_view_count is not null 
-            or add_to_cart_count is not null 
-            or checkout_count is not null 
-            or shipping_count is not null 
-        group by 1,2
+        from session_event_count
+        group by all
     )
 
 select *

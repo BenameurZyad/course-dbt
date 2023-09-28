@@ -1,13 +1,4 @@
 models:
-  - name: fact_page_views
-    description: Table for pages type view count at URL level
-    columns:
-      - name: page_url
-        description: Is the Primary Key
-        tests:
-          - unique
-          - not_null
-
   - name: fact_products_views
     description: Table for pages type view count at Product level
     columns:
@@ -17,29 +8,22 @@ models:
           - unique
           - not_null
 
-  - name: fact_sessions_views
-    description: Table for pages type view count at Session level
-    tests:
-      - dbt_utils.unique_combination_of_columns:
-          combination_of_columns:
-            - session_id
-            - created_date
-
-  - name: fact_users_views
+  - name: fact_users_session_views
     description: Table for pages type view count at User level
-    columns:
-      - name: user_id
-        description: Is the Primary Key
-        tests:
-          - unique
-          - not_null
-
-  - name: int_page_views_count
-    description: Intermediate Table detailing event at User/Session level
     tests:
       - dbt_utils.unique_combination_of_columns:
           combination_of_columns:
             - user_id
             - session_id
+            - created_at
+
+  - name: int_session_event_count_agg
+    description: Intermediate Table detailing event at User/Session/Product level
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - user_id
+            - session_id
+            - created_at
             - product_id
             - event_type

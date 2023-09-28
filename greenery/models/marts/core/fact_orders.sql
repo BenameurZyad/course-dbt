@@ -1,7 +1,5 @@
 with
     -- refs
-    orders as (select * from {{ ref("stg__orders") }}),
-    
     order_details as (select * from {{ ref("int__orders_details") }}),
 
     -- CTEs
@@ -20,15 +18,15 @@ with
 
     final as(
 
-        select 
-            orders.order_id,
-            orders.user_id,
+        select distinct
+            order_details.order_id,
+            order_details.user_id,
             orders_aggregated_info.order_unique_items,
             orders_aggregated_info.order_total_items,
-            orders.created_date,
-            orders.created_at
+            order_details.created_date,
+            order_details.created_at
 
-        from orders
+        from order_details
         left join orders_aggregated_info using (order_id)
 
     )

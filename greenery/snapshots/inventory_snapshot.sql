@@ -2,8 +2,8 @@
 
 {{
   config(
-    target_database = "DEV_DB",
-    target_schema = "DBT_ZYADBENAMEURSANIMAXCOM",
+    target_database = target.database,
+    target_schema = target.schema,
     strategy='check',
     unique_key='product_id',
     check_cols=['inventory'],
